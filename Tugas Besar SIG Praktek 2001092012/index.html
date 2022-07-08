@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Pangkalan Kerinci</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/LineIcons.3.0.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/tiny-slider.css" />
+    <link rel="stylesheet" href="assets/css/glightbox.min.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/leaflet.css" />
+    <link rel="stylesheet" href="assets/css/leaflet-marker-highlight.css">
+    <link rel="stylesheet" href="assets/css/MarkerCluster.css" />
+    <link rel="stylesheet" href="assets/css/MarkerCluster.Default.css" />
+
+    <style>
+      #map { height: 600px; }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- /End Preloader -->
+
+    <!-- Start Header Area -->
+    <header class="header navbar-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="nav-inner">
+                        <!-- Start Navbar -->
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand" href="index.html">
+                                <h3>Geografis</h3>
+                            </a>
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                    <li class="nav-item">
+
+                                    </li>
+                                </ul>
+                            </div> <!-- navbar collapse -->
+                            <div class="button my-2">
+                                <a href="#hero" class="btn">Get started</a>
+                            </div>
+                        </nav>
+                        <!-- End Navbar -->
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Hero Area -->
+    <section class="hero-area" id="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 offset-lg-2 col-md-12 col-12">
+                    <div class="hero-content">
+                        <h4 class="wow fadeInUp" data-wow-delay=".2s">Sistem Informasi Geografis
+                        </h4>
+                        <h1 class="wow fadeInUp" data-wow-delay=".4s">
+                            Geografis Kecamatan Pangkalan Kerinci
+                        </h1>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">Berisi informasi-informasi geografis untuk daerah kecamatan Pangkalan kerinci, kabutapen Pelalawan< Riau</p>
+                        <div class="button wow zoomIn" data-wow-delay="1s">
+                            <a href="#geo"><i class="lni lni-arrow-down-circle"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Hero Area -->
+
+    <!-- Start Domain Search -->
+    <script src="assets/js/leaflet.js"></script>
+    <script type="text/javascript" src="assets/js/kerinci.js"></script>
+    <section class="domain-search" id="geo">
+        <div class="container">
+            <div class="inner-cotainer">
+                <img class="sahpe" src="assets/images/shapes/shape.png" alt="#">
+                <img class="sahpe2" src="assets/images/shapes/shape.png" alt="#">
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1 col-md-12 col-12">
+                        <div class="content">
+                            <h2>Daerah Administrasi Pangkalan kerinci</h2>
+                            <!-- Start Search Form -->
+                            <div class="search-form ">
+                                <div id="map"></div>
+                                <script>
+
+                                var mapOptions = {
+                                    center: [0.3659856811747061, 101.85696053069901],
+                                    zoom: 11
+                                }
+                                // Creating a map object
+                                var map = new L.map('map', mapOptions);
+
+                                // Creating a Layer object
+                                var layer = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+
+                                // Adding layer to the map
+                                map.addLayer(layer);
+
+                                var info = L.control();
+
+                                info.onAdd = function(map) {
+                                    this._div = L.DomUtil.create('div', 'info');
+                                    this.update();
+                                    return this._div;
+                                };
+
+                                info.update = function(props) {
+                                    this._div.innerHTML = '<h5>Peta Kecamatan Pangkalan Kerinci</h5>' + (props ?
+                                        '<b>' + props.name + '</b><br />' :
+                                        'Arahkan Kursor ke Tujuan');
+                                };
+
+                                info.addTo(map);
+
+
+                                // get color depending on population density value
+                                function getColor(d) {
+                                  return d;
+                                }
+
+                                function style(feature) {
+                                    return {
+                                        weight: 2,
+                                        opacity: 1,
+                                        color: 'white',
+                                        dashArray: '3',
+                                        fillOpacity: 0.7,
+                                        fillColor: getColor(feature.properties.density)
+                                    };
+                                }
+
+                                function highlightFeature(e) {
+                                    var layer = e.target;
+
+                                    layer.setStyle({
+                                        weight: 5,
+                                        color: '#666',
+                                        dashArray: '',
+                                        fillOpacity: 0.7
+                                    });
+
+                                    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                                        layer.bringToFront();
+                                    }
+
+                                    info.update(layer.feature.properties);
+                                }
+
+                                var geojson;
+
+                                function resetHighlight(e) {
+                                    geojson.resetStyle(e.target);
+                                    info.update();
+                                }
+
+                                function zoomToFeature(e) {
+                                    map.fitBounds(e.target.getBounds());
+                                }
+
+                                function onEachFeature(feature, layer) {
+                                    layer.on({
+                                        mouseover: highlightFeature,
+                                        mouseout: resetHighlight,
+                                        click: onMapClick
+                                    });
+                                }
+
+                                geojson = L.geoJson(statesData, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                }).addTo(map);
+
+                                map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+
+                                //legenda
+                                var legend = L.control({
+                                    position: 'topright'
+                                });
+
+
+
+                                legend.addTo(map);
+
+                                var popup = L.popup();
+
+                                // buat fungsi popup saat map diklik
+                                function onMapClick(e) {
+                                    popup
+                                        .setLatLng(e.latlng)
+                                        .setContent("koordinatnya adalah " + e.latlng
+                                            .toString()
+                                        ) //set isi konten yang ingin ditampilkan, kali ini kita akan menampilkan latitude dan longitude
+                                        .openOn(map);
+
+                                    document.getElementById('latlong').value = e.latlng //value pada form latitde, longitude akan berganti secara otomatis
+                                }
+                                map.on('click', onMapClick); //jalankan fungsi
+
+                                function register(event, fn) {
+                                    [].forEach.call(document.querySelectorAll(event), function(element) {
+                                        element.addEventListener('click', function(e) {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            fn();
+                                        }, false);
+                                    });
+                                }
+
+                                var markers = L.markerClusterGroup();
+
+                                    var geoJsonLayer = L.geoJson(geoJsonData, {
+                                      onEachFeature: function (feature, layer) {
+                                        layer.bindPopup(feature.properties.address);
+                                      }
+                                    });
+                                    markers.addLayer(geoJsonLayer);
+
+                                    map.addLayer(markers);
+                                    map.fitBounds(markers.getBounds());
+
+
+                                </script>
+                            </div>
+                            <!-- End Search Form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- End Domain Search -->
+
+
+
+    <!-- Start Pricing Style 2 Area -->
+    <div class="pricing-style2 section bg-gray justify-content-center">
+        <div class="container justify-content-center">
+            <div class="row  justify-content-center">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h3 class="wow zoomIn" data-wow-delay=".2s">Sedikit Informasi</h3>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Fitur Dari Kami</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">Belajar dan Jelajah lebih banyak tentang kecamatan Pangkalan kerinci</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <!-- Start Single Pricing s-->
+                    <div class="single-pricing">
+                        <h3 class="title">Daerah Strategis</h3>
+                        <p class="des">Kecamatan Pangkalan Kerinci Merupakan Ibukota kabupaten Pelalawan, dan merupakan pusat dari berbagai administrasi dan industri di kabupaten ini.</p>
+                        <div class="search-form">
+
+
+                            <div id="map2" style="width:420px; height:600px;"></div>
+                            <script src="assets/js/leaflet-marker-highlight.min.js"></script>
+                            <script type="text/javascript" src="assets/js/pelalawan.js"></script>
+                            <script>
+
+                            var map2 = L.map('map2');
+
+                          	map2.createPane('labels3');
+
+                          	// This pane is above markers but below popups
+                          	map2.getPane('labels3').style.zIndex = 650;
+
+                          	// Layers in this pane are non-interactive and do not obscure mouse/touch events
+                          	map2.getPane('labels3').style.pointerEvents = 'none';
+
+                          	var cartodbAttribution3 = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
+
+                          	var positron3 = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+                          		attribution: cartodbAttribution3
+                          	}).addTo(map2);
+
+                          	var positronLabels3 = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+                          		attribution: cartodbAttribution3,
+                          		pane: 'labels3'
+                          	}).addTo(map2);
+
+                          	geojson = L.geoJson(pelalawan).addTo(map2);
+
+                          	geojson.eachLayer(function (layer) {
+                          		layer.bindPopup(layer.feature.properties.name);
+                          	});
+
+                          	map2.setView([0.37776920791714386, 101.85727402039883], 11);
+
+                            var marker1 = L.marker([0.37776920791714386, 101.85727402039883], {highlight: 'permanent'}).addTo(map2);
+                            </script>
+                        </div>
+                    </div>
+                    <!-- End Single Pricing s-->
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <!-- Start Single Pricing s-->
+                    <div class="single-pricing">
+                        <h3 class="title">Penuh Dengan Tempat Penting</h3>
+                        <p class="des">Ada bebrapapa tempat penting yang berada di kecamatan ini, mulai dari rumah sakit, perusahaan hingga pusat pemerintahan</p>
+                        <div class="search-form">
+                            <div id="map3" style="width:420px; height:600px;"></div>
+
+                          	<script src="assets/js/leaflet.markercluster-src.js"></script>
+                            <script>
+
+                            var geoJsonData = {
+                              "type": "FeatureCollection",
+                              "features": [
+                                {
+                                  "type": "Feature",
+                                  "properties": {"address": "Kantor Camat Pangkalan Kerinci"},
+                                  "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                      101.84369087219238,
+                                      0.384304026057277
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Feature",
+                                  "properties": {"address": "Kantor Bupati Pelalawan"},
+                                  "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                      101.84175968170165,
+                                      0.3833599096696442
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Feature",
+                                  "properties": {"address": "Polres Pelalawan"},
+                                  "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                      101.85896873474121,
+                                      0.3688333786471657
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Feature",
+                                  "properties": {"address": "RSUD Selasih Pelalawan"},
+                                  "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                      101.83965682983398,
+                                      0.41284203916581186
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Feature",
+                                  "properties": {"address": "Rumah Sakit EFarina"},
+                                  "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                      101.85401201248169,
+                                      0.42689643699214747
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Feature",
+                                  "properties": {"address": "PT Riau Andalan Pulp and Paper"},
+                                  "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [
+                                      101.8877649307251,
+                                      0.4394059023318861
+                                    ]
+                                  }
+                                }
+                              ]
+                            };
+                            var map3 = L.map('map3').setView([0.37776920791714386, 101.85727402039883], 13);
+
+                            var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                              maxZoom: 18,
+                              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                              id: 'mapbox/streets-v11',
+                              tileSize: 512,
+                              zoomOffset: -1
+                            }).addTo(map3);
+
+                            var markers = L.markerClusterGroup();
+
+                        		var geoJsonLayer = L.geoJson(geoJsonData, {
+                        			onEachFeature: function (feature, layer) {
+                        				layer.bindPopup(feature.properties.address);
+                        			}
+                        		});
+                        		markers.addLayer(geoJsonLayer);
+
+                        		map3.addLayer(markers);
+                        		map3.fitBounds(markers.getBounds());
+
+                            </script>
+                        </div>
+                    </div>
+                    <!-- End Single Pricing s-->
+                </div>
+                <div>
+                    <!-- Start Single Pricing s-->
+                    <div class="single-pricing text-center">
+                        <h3 class="title ">Overlay Geografis Kecamatan pangkalan kerinci</h3>
+                        <div class="search-form position-relative">
+                            <div id="map4" style="width:1000px; height:600px;"></div>
+
+                            <script>
+
+
+                                var map4 = L.map('map4');
+
+                              	map4.createPane('labels2');
+
+                              	// This pane is above markers but below popups
+                              	map4.getPane('labels2').style.zIndex = 650;
+
+                              	// Layers in this pane are non-interactive and do not obscure mouse/touch events
+                              	map4.getPane('labels2').style.pointerEvents = 'none';
+
+                              	var cartodbAttribution2 = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
+
+                              	var positron2 = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+                              		attribution: cartodbAttribution2
+                              	}).addTo(map4);
+
+                              	var positronLabels2 = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+                              		attribution: cartodbAttribution2,
+                              		pane: 'labels2'
+                              	}).addTo(map4);
+
+                              	geojson = L.geoJson(statesData).addTo(map4);
+
+                              	geojson.eachLayer(function (layer) {
+                              		layer.bindPopup(layer.feature.properties.name);
+                              	});
+
+                              	map4.setView([0.37776920791714386, 101.85727402039883], 11);
+
+                                var basemaps = {
+
+                                  'Topography, then places': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+                                      layers: 'TOPO-WMS,OSM-Overlay-WMS'
+                                  }),
+
+                                    'Topography': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+                                        layers: 'TOPO-WMS'
+                                    }),
+
+                                    'Places': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+                                        layers: 'OSM-Overlay-WMS'
+                                    }),
+
+                                    'Dark': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+                                        layers: 'Dark'
+                                    }),
+
+
+
+                                    'Places, then topography': L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
+                                        layers: 'OSM-Overlay-WMS,TOPO-WMS'
+                                    })
+                                    };
+
+                                L.control.layers(basemaps).addTo(map4);
+
+                                basemaps.Topography.addTo(map4);
+                            </script>
+                        </div>
+                    </div>
+                    <!-- End Single Pricing s-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Pricing Style 2 Area -->
+
+
+    <!-- Start Footer Area -->
+    <footer class="footer section">
+
+        <!-- Start Footer Bottom Area -->
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="inner-content">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <p class="text">Hormat Kami, Nanda Julian Lubis.
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Bottom Area -->
+    </footer>
+    <!--/ End Footer Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top">
+        <i class="lni lni-arrow-up-circle"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/tiny-slider.js"></script>
+    <script src="assets/js/glightbox.min.js"></script>
+    <script src="assets/js/count-up.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+
+</body>
+
+</html>
